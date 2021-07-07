@@ -57,6 +57,9 @@ ________________________
 
 PARA MONITORAR MENSAGEM RECEBIDA ACESSE
 http://192.168.0.x:2000/
+;;;;;;;;;;;;;;;;;;;;;
+http://192.168.0.151:2000/S3SAIDA*
+.................................................
        // escolha QUAL DISPLAY - QUAL FONTE 
        // EXEMPLO: http://192.168.0.151:2000/S1234*
        //-->> DISPLAY SAIDA FONTE Arial14
