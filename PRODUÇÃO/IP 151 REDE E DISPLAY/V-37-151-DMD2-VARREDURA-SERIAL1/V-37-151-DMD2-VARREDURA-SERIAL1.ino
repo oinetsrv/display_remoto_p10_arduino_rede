@@ -1,4 +1,4 @@
- /*
+/*
 Projeto: Controle de DISPLAY 
 CONTROLADOR 1
 |- RECEBE DADOS VIA REDE
@@ -21,7 +21,6 @@ ________________________
 |9  GND    10 pin_clk  L|
 |11 GND    12 pin_r_datR|
 ________________________
-
 // PAINEL           MEGA
 //byte panelsWide   N/C
 //byte panelsHigh   N/C
@@ -41,7 +40,6 @@ ________________________
 |7 CS     8  RST       |
 |9 VCC    10 GND       |
 ________________________
-
 //ADAPTADOR REDE    MEGA
 1 CLK               N/C
 3 WOL               N/C
@@ -82,6 +80,9 @@ http://192.168.0.x:2000/
  #include <fonts/SystemFont5x7.h>
  #include <fonts/Droid_Sans_16.h>
 
+#include <avr/io.h>  // wachdog
+#include <avr/wdt.h> // wachdog
+
  const int COUNTDOWN_FROM = 12;
  int counter = COUNTDOWN_FROM;
  int Q_DISPLAY = 4;
@@ -99,7 +100,9 @@ http://192.168.0.x:2000/
  String display_saida_temp = "";
  //################# TRATAMENTO MENSAGEM //
  void setup() {
+   wdt_disable (); // desativa o cachorro
    Serial.begin(9600);
+   wdt_enable (WDTO_8S); // ativa o wachdog
    Serial1.begin(9600);
    dmd.setBrightness(255);
    dmd.selectFont(Arial14);
@@ -107,6 +110,7 @@ http://192.168.0.x:2000/
     Serial.println("V-37-151-DMD2-VARREDURA-SERIAL1:");
  } // FIM SETUP
  void loop() {
+  wdt_reset ();
    while (Serial1.available()) {
      //Serial.println("CONECTADO-SERIAL1:");
      char request = Serial1.read();
@@ -128,6 +132,14 @@ http://192.168.0.x:2000/
          str.remove(0, 1);
        }
        if (str[0] == '9') {
+          wdt_disable (); // desativa o cachorro
+          delay(10);
+          wdt_enable (WDTO_1S);
+          dmd.fillScreen(true);
+        delay(500);
+        dmd.clearScreen();
+        delay(500);
+  delay(3000);
          dmd.setBrightness(255);
        }
        if (str[0] == '8') {
