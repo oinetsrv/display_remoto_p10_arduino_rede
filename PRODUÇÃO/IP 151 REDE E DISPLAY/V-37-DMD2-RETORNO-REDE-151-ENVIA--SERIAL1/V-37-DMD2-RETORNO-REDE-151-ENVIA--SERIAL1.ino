@@ -1,3 +1,5 @@
+
+
  /*
 Projeto: Controle de DISPLAY 
 CONTROLADOR 1
@@ -143,7 +145,7 @@ http://192.168.0.x:2000/
      //Serial.println("novo cliente"); //Apresenta esta mensagem quando o cliente se liga ao servidor
      while (!client.available()) 
        {
-        delay(1);
+        delay(10);
        }
      // Ler a primeira linha do pedido
      String request = client.readStringUntil('\r'); // espera até final da linha
