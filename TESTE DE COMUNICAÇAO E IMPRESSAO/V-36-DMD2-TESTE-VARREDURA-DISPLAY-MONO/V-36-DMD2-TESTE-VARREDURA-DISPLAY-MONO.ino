@@ -56,8 +56,8 @@ const int COUNTDOWN_FROM = 12;
 int counter = COUNTDOWN_FROM;
 int QDISPLAY = 2;
 
-//SoftDMD dmd(QDISPLAY, 1, 9, 6, 7, 8, 52, 51); // MEGA DMD controls the entire display
-SoftDMD dmd(QDISPLAY, 1, 9, 6, 7, 8, 12, 11); // UNO
+SoftDMD dmd(QDISPLAY, 1, 9, 6, 7, 8, 52, 51); // MEGA DMD controls the entire display
+//SoftDMD dmd(QDISPLAY, 1, 9, 6, 7, 8, 12, 11); // UNO
 // PAINEL           MEGA      UNO
 //byte panelsWide   N/C
 //byte panelsHigh   N/C
