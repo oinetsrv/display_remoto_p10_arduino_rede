@@ -60,7 +60,7 @@ void setup() {
   dmd.begin();
     Serial.println("Projeto controle rede de displays fabrica de fertilizantes.\n");
     Serial.println("                                                             ");
-    Serial.println("Nome arquivo:V-36-DMD2-TESTE-VARREDURA-DISPLAY-MONO.ino... \n");
+    Serial.println("Nome arquivo:V-1-DMD2-VARREDURA-DISPLAY-MONO-MEGA.ino... \n");
     
 }// end setup
 
