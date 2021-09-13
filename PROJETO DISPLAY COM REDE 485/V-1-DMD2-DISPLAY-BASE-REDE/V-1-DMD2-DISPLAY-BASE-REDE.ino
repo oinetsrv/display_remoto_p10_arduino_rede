@@ -80,6 +80,18 @@ USANDO VSCODE
 F1 + arduino select sketch (pasta) marque o arquivo que vc quer copilar
 F1 + arduino: verify, upload, open, close serial monitor, board manager, change baud rate,
 change board type, select programmer, select serial port,
+&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&
+    PROTOCOLO DE REDE DISPLAY
+            // PRIMEIRO DIGITO:  ENDEREÇO CLIENTE
+                // COMO FILTRO UTILIZAR CARACTERES ESPECIAIS EXEMPLO:@,#,$
+            // SEGUNDO  DIGITO:  TIPO DE FONTE
+                // CONFIGURA EM: 0=SystemFont5x7, 1=Droid_Sans_12, 2=Arial14, 3=Arial_Black_16
+            // TERCEIRO DIGITO: TEXTO LIVRE
+            // ULTIMO   DIGITO: MARCADOR FINAL MENSAGEM *
+            //E1ABCD*
+            //E2ABC*
+            //E3ABC*
+&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&
 
  */
 
@@ -132,120 +144,93 @@ void setup() {
 // --- Loop Infinito                --- //
 void loop() {
 
-while (Serial.available()) {
-    //Serial.println("CONECTADO-SERIAL1:");
-    char request = Serial.read();
-    str.concat(request);
-    int tamanho_string = str.length();
-    // concatenando string para char mais facil de manipular
-        if (str.endsWith("*")) {
-            int marcador = str.indexOf('E');
-            int cont=0;
-                for (int i = marcador; i <= tamanho_string; i++) {
-                    charRecebida[cont] = str[i];
-                    cont++;
-                }//  end for
-                Serial.print  ("charRecebida:   ");
-                Serial.print  ( charRecebida     );
-                Serial.println("                ");
-                delay(1); 
+    while (Serial.available()) {
+        //Serial.println("CONECTADO-SERIAL1:");
+        char request = Serial.read();
+        str.concat(request);
+        int tamanho_string = str.length();
+            // concatenando string para char mais facil de manipular
+            if (str.endsWith("*")) {
+                int marcador = str.indexOf('E');
+                int cont=0;
+                    for (int i = marcador; i <= tamanho_string; i++) {
+                        charRecebida[cont] = str[i];
+                        cont++;
+                    }//  end for
+                    Serial.print  ("charRecebida:   ");
+                    Serial.print  ( charRecebida     );
+                    Serial.println("                ");
+                    delay(1); 
             } // end if str.endsWith
-    // impressão da mensagem tratada
-    if (str.endsWith("*")) {
-            int primeiro_marcador = str.indexOf('E'); // PEGA O MARCADOR DE FINAL
-            int tamanho_corte = str.indexOf('*'); // final  texto
-            String strTemp = str.substring(primeiro_marcador+2, tamanho_corte);
-            int tamanho_temp = strTemp.length(); // tamanho
-
-            if (charRecebida[0] == 'E') { //E0test*
-                if (charRecebida[1] == '0') {
-                    Serial.println("SystemFont5x7: ");
-                    dmd.selectFont(SystemFont5x7);
-                    // TEMPORARIO
-                    dmd.clearScreen();
-                    delay(1);
-                    dmd.drawString(1,0,strTemp);
-                    strTemp = "12345";
-                    dmd.drawString(1,8,strTemp);
-                    // END TEMPORARIO
-
-                    // Serial.println("  ");
-                }// end charRecebida 
-                if (charRecebida[1] == '1') {
-                    Serial.println("Droid_Sans_12: ");
-                    dmd.selectFont(Droid_Sans_12);
-                    // TEMPORARIO
-                    dmd.clearScreen();
-                    delay(1);
-                    dmd.drawString(2,3,strTemp);
-                    
-                    // END TEMPORARIO
-
-                    //Serial.println("  ");
-                }// end if
-                if (charRecebida[1] == '2') {
-                    Serial.println("Arial14: ");
-                    dmd.selectFont(Arial14);
-                    // TEMPORARIO
-                    dmd.clearScreen();
-                    delay(1);
-                    dmd.drawString(2,2,strTemp);
-                    
-                    // END TEMPORARIO
-                    //Serial.println("  ");
-                } // end if
-                if (charRecebida[1] == '3') {
-                    Serial.println("Arial_Black_16: ");
-                    dmd.selectFont(Arial_Black_16);
-                    // TEMPORARIO
-                    dmd.clearScreen();
-                    delay(1);
-                    dmd.drawString(2,2,strTemp);
-                    
-                    // END TEMPORARIO
-                    //Serial.println("  ");
-                } // end if
-            // retirar digitos significativos da impressao
-            
-            // FIM ESCOLHA FONTE
-
-             //box.println(strTemp); 
-             //int n = 1234;
-            
-             
-
-            Serial.print  ("strTemp:   ");
-            Serial.print(strTemp);
-            Serial.println("");
-        }
-
-    }// end str.endsWith
-    // destruindo string temp
-    if (str.endsWith("*")) {  
-        // testando  '\0'
-            Serial.println("charRecebida[i]: ");
-                for (int i = 0; i <= tam_msg; i++) {
-                    Serial.print(charRecebida[i]  ) ;
-                    
-                }//  end for
-            Serial.println("");
-                int limpar_string = str.indexOf('*') + 1;
-                str.remove(0, limpar_string);
-                
-                delay(1); 
-                 
+            // impressão da mensagem tratada
+            if (str.endsWith("*")) {
+                    int primeiro_marcador = str.indexOf('E'); // PEGA O MARCADOR DE FINAL
+                    int tamanho_corte = str.indexOf('*'); // final  texto
+                    String strTemp = str.substring(primeiro_marcador+2, tamanho_corte);
+                    int tamanho_temp = strTemp.length(); // tamanho
+                    if (charRecebida[0] == 'E') { //E0test*
+                        if (charRecebida[1] == '0') {
+                            Serial.println("SystemFont5x7: ");
+                            dmd.selectFont(SystemFont5x7);
+                            // TEMPORARIO
+                            dmd.clearScreen();
+                            delay(1);
+                            dmd.drawString(1,0,strTemp);
+                            strTemp = "12345";
+                            dmd.drawString(1,8,strTemp);
+                            // END TEMPORARIO
+                            // Serial.println("  ");
+                        }// end charRecebida 
+                        if (charRecebida[1] == '1') {
+                            Serial.println("Droid_Sans_12: ");
+                            dmd.selectFont(Droid_Sans_12);
+                            // TEMPORARIO
+                            dmd.clearScreen();
+                            delay(1);
+                            dmd.drawString(2,3,strTemp);
+                            // END TEMPORARIO
+                            //Serial.println("  ");
+                        }// end if
+                        if (charRecebida[1] == '2') {
+                            Serial.println("Arial14: ");
+                            dmd.selectFont(Arial14);
+                            // TEMPORARIO
+                            dmd.clearScreen();
+                            delay(1);
+                            dmd.drawString(2,2,strTemp);
+                            // END TEMPORARIO
+                            //Serial.println("  ");
+                        } // end if
+                        if (charRecebida[1] == '3') {
+                            Serial.println("Arial_Black_16: ");
+                            dmd.selectFont(Arial_Black_16);
+                            // TEMPORARIO
+                            dmd.clearScreen();
+                            delay(1);
+                            dmd.drawString(2,2,strTemp);
+                            // END TEMPORARIO
+                            //Serial.println("  ");
+                        } // end if
+                    // retirar digitos significativos da impressao
+                    // FIM ESCOLHA FONTE
+                    Serial.print  ("strTemp:   ");
+                    Serial.print(strTemp);
+                    Serial.println("");
+                } // end if (charRecebida[0] == 'E') 
+            }// end if (str.endsWith("*"))
+            // destruindo string temp
+            if (str.endsWith("*")) {  
+                // testando  '\0'
+                    Serial.println("charRecebida[i]: ");
+                    for (int i = 0; i <= tam_msg; i++) {
+                        Serial.print(charRecebida[i]  ) ;  
+                    }//  end for
+                    Serial.println("");
+                    int limpar_string = str.indexOf('*') + 1;
+                    str.remove(0, limpar_string);
+                    delay(1); 
             } // end if str.endsWith
-            //E0ABCDE*
-            //E1ABCD*
-            //E2ABC*
-            //E3ABC*
-} // end while
-     
-        
- 
-// =================================================================================
-
-// =================================================================================
+    } // end while
 } // end loop
 // =================================================================================
 void teste_display_contagem (){
@@ -265,7 +250,6 @@ void teste_display_contagem (){
             counter = COUNTDOWN_FROM;
             delay(1000);
         } // end if(counter == 0)
-
 }// end teste_display_contagem
 
 
