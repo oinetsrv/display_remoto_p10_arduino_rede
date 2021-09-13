@@ -61,9 +61,9 @@
 Etapas: INICIO EM 10/09/2021 --> PREVISÃO DE CONCLUSÃO UMA SEMANA!!!!
 1-001 - Desenvolvimento base de manipulação do display:
         OK  - Escolha de fontes
-        - Definir tamanho msg
+        OK  - Definir tamanho msg
 1-002 - Desenvolvimento base de manipulação de rede serial:
-        - recebimento comandos via serial
+        OK  - recebimento comandos via serial
         - envio de status de comando executado via serial
         - recebimento de comandos via serial1
         - envio de status de comando executado via serial1
@@ -104,7 +104,7 @@ change board type, select programmer, select serial port,
 
 
 // --- Instâncias                   --- //
-SoftDMD dmd(QDISPLAY, 1, 9, 6, 7, 8, 52, 51); // MEGA DMD controls the entire display
+SoftDMD     dmd(QDISPLAY, 1, 9, 6, 7, 8, 52, 51); // MEGA DMD controls the entire display
 //SoftDMD dmd(QDISPLAY, 1, 9, 6, 7, 8, 12, 11); // UNO
 DMD_TextBox box(dmd, 1, 2); // "box" provides a text box to automatically write to/scroll the display
 //DMD_TextBox box1(dmd, 31, 2);
