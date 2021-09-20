@@ -65,11 +65,11 @@ Etapas: INICIO EM 10/09/2021 --> PREVISÃO DE CONCLUSÃO UMA SEMANA!!!!
 1-002 - Desenvolvimento base de manipulação de rede serial:
         OK  - recebimento comandos via serial
         - envio de status de comando executado via serial
-        - recebimento de comandos via serial1
+        OK  - recebimento de comandos via serial1
         - envio de status de comando executado via serial1
 1-003 - Desenvolvimento base de manipulação de rede 485:
-        - montagem de hardware para rede 485 
-        - recebimento comandos via 485
+        OK  - montagem de hardware para rede 485 
+        OK  - recebimento comandos via 485
         - envio de status de comando executado via 485
         - desenvolvimento de protocolo para multiplos players
 1-004 - Montagem de protótipos com 3 displays na rede:
