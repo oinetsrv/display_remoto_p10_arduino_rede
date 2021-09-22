@@ -72,11 +72,11 @@ Etapas: INICIO EM 10/09/2021 --> PREVISÃO DE CONCLUSÃO UMA SEMANA!!!!
 1-004 - Montagem de protótipos com 3 displays na rede:
         - criar nó usando raspberry para mudar protocolo para ethernet
         OK  - deixar em teste os 3 displays e o raspberry
-1-006 - Desenvolvimento base de manipulação de rede serial:
-        - envio de status de comando executado via serial
-        - envio de status de comando executado via serial1
-        - envio de status de comando executado via 485
-1-005 - Integrar rede telnet dos displays a rede de termometria:
+1-005 - Desenvolvimento base de manipulação de rede serial:
+        OK  - envio de status de comando executado via serial
+        OK  - envio de status de comando executado via serial1
+        OK  - envio de status de comando executado via 485
+1-006 - Integrar rede telnet dos displays a rede de termometria:
 
 USANDO VSCODE
 F1 + arduino select sketch (pasta) marque o arquivo que vc quer copilar
@@ -341,11 +341,20 @@ void Comunica_serial1T(int marca) {
             // END ONDE INDENTIFICO O ENDERECO(E,S,T)   ///////
             // DEFININDO FONTE  E SEPARANDO TEXTO//////////
             String strTemp = str.substring(marcador + 2, tamanho_corte);
-            Serial.print("String impressa: ");
-            Serial.print(strTemp            );
-            Serial.print("\n               ");
             // DEFININDO QUAL O MARCADOR FOI SELECIONADO!
             if (marcadorS != -1 && marca == 1 || marcadorE != -1 && marca == 2 || marcadorT != -1 && marca == 3) {
+                Serial.print("String impressa: ");
+                Serial.print(strTemp            );
+                Serial.print("\n               ");
+                    delay(100);
+                    digitalWrite(pinled, HIGH);
+                    digitalWrite(MASTER, HIGH);
+                    delay(100);
+                    Serial1.print(strTemp);
+                    delay(100);
+                    digitalWrite(pinled, LOW);
+                    digitalWrite(MASTER, LOW);
+
                 if (charRecebida[marcador + 1] == '0') {
                     Serial.println("SystemFont5x7: ");
                     dmd.selectFont(SystemFont5x7);
