@@ -161,10 +161,9 @@ void setup() {
 // --- Loop Infinito                --- //
 void loop() {
     wdt_reset();
-    //marca = 3; // 1 Marcador S || 2 Marcador E || 3 Marcador T 
-    //Comunica_serial1T(marca);
-    
-    Comunica_serialR();
+    marca = 2; // 1 Marcador S || 2 Marcador E || 3 Marcador T 
+    Comunica_serial1T(marca);
+    //Comunica_serialR();
 } // end loop
 // =================================================================================
 // --- Desenvolvimento das Funções  --- //
