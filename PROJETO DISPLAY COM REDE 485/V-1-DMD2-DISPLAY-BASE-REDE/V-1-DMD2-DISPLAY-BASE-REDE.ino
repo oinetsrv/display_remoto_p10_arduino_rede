@@ -173,6 +173,7 @@ void loop() {
             for (int i = 0; i <= tam_msg; i++) {
                  charRecebida[i] = ' ';
              }// END FOR
+             cont=0;
         }
         delay(50);
 
@@ -250,7 +251,6 @@ void Comunica_serial1T(int marca) {
         int tamanho_string = str.length();
         int marcador = -1;
         charRecebida[cont] = request;
-        //Serial.print(charRecebida[cont]);
         cont++;
         // ONDE INDENTIFICO O ENDERECO(E,S,T)   ///////
         if (str.endsWith("*")) { //S0ABCDE*
@@ -258,7 +258,8 @@ void Comunica_serial1T(int marca) {
             int marcadorE = -1;
             int marcadorT = -1;
             int tamanho_corte = str.length();
-            Serial.print (str); // ENVIA NA SERIAL O QUE RECEBEU SERIAL1
+            Serial.print("String str brutaaa: ");
+            Serial.println (str); // ENVIA NA SERIAL O QUE RECEBEU SERIAL1
             Serial.flush ();    // ESPERA DADOS SEREM TODOS ENVIADOS
             for (int i = 0; i < tamanho_string; i++) {
                 if (charRecebida[i] == 'S' && marca == 1) {
@@ -289,10 +290,10 @@ void Comunica_serial1T(int marca) {
                     } // END IF
                 } //END IF
                 if (charRecebida[i] == '*') {
-                    Serial.print("Marcador posicao *: ");
+                    //Serial.print("Marcador posicao *: ");
                     tamanho_corte = i;
-                    Serial.println(tamanho_corte);
-                    Serial.flush (); 
+                    //Serial.println(tamanho_corte);
+                    //Serial.flush (); 
                 } //END IF
             } // end for
             // END ONDE INDENTIFICO O ENDERECO(E,S,T)   ///////
@@ -300,20 +301,7 @@ void Comunica_serial1T(int marca) {
             String strTemp = str.substring(marcador + 2, tamanho_corte);
             // DEFININDO QUAL O MARCADOR FOI SELECIONADO!
             if (marcadorS != -1 && marca == 1 || marcadorE != -1 && marca == 2 || marcadorT != -1 && marca == 3) {
-                Serial.print("String impressa: ");
-                Serial.print(strTemp            );
-                Serial.print("\n               ");
-                Serial.flush (); 
-                    delay(10);
-                    digitalWrite(pinled, HIGH);
-                    digitalWrite(MASTER, HIGH);
-                    delay(10);
-                    Serial1.print(strTemp);
-                    Serial1.flush (); 
-                    delay(10);
-                    digitalWrite(pinled, LOW);
-                    digitalWrite(MASTER, LOW);
-
+                
                 if (charRecebida[marcador + 1] == '0') {
                     Serial.println("SystemFont5x7: ");
                     dmd.selectFont(SystemFont5x7);
@@ -321,6 +309,22 @@ void Comunica_serial1T(int marca) {
                     delay(1);
                     dmd.drawString(1, 0, strTemp);
                     dmd.drawString(1, 8, strTemp);
+
+                    Serial.print ("String impressa: ");
+                    Serial.print (strTemp            );
+                    Serial.print ("\n               ");
+                    Serial.flush (); 
+                    delay(10);
+                    digitalWrite(pinled, HIGH);
+                    digitalWrite(MASTER, HIGH);
+                    delay(10);
+                    Serial1.print(str);// DEVOLVENDO A STRING PARA REDE
+                    Serial1.flush (); 
+                    delay(10);
+                    digitalWrite(pinled, LOW);
+                    digitalWrite(MASTER, LOW);
+                    cont=0;
+
                 } // end charRecebida 
                 if (charRecebida[marcador + 1] == '1') {
                     Serial.println("Droid_Sans_12: ");
@@ -328,6 +332,22 @@ void Comunica_serial1T(int marca) {
                     dmd.clearScreen();
                     delay(1);
                     dmd.drawString(2, 3, strTemp);
+
+                    Serial.print ("String impressa: ");
+                    Serial.print (strTemp            );
+                    Serial.print ("\n               ");
+                    Serial.flush (); 
+                    delay(10);
+                    digitalWrite(pinled, HIGH);
+                    digitalWrite(MASTER, HIGH);
+                    delay(10);
+                    Serial1.print(str);// DEVOLVENDO A STRING PARA REDE
+                    Serial1.flush (); 
+                    delay(10);
+                    digitalWrite(pinled, LOW);
+                    digitalWrite(MASTER, LOW);
+                    cont=0;
+                    
                 } // end if
                 if (charRecebida[marcador + 1] == '2') {
                     Serial.println("Arial14: ");
@@ -335,6 +355,23 @@ void Comunica_serial1T(int marca) {
                     dmd.clearScreen();
                     delay(1);
                     dmd.drawString(2, 2, strTemp);
+
+                    
+                    Serial.print ("String impressa: ");
+                    Serial.print (strTemp            );
+                    Serial.print ("\n               ");
+                    Serial.flush (); 
+                    delay(10);
+                    digitalWrite(pinled, HIGH);
+                    digitalWrite(MASTER, HIGH);
+                    delay(10);
+                    Serial1.print(str);// DEVOLVENDO A STRING PARA REDE
+                    Serial1.flush (); 
+                    delay(10);
+                    digitalWrite(pinled, LOW);
+                    digitalWrite(MASTER, LOW);
+                    cont=0;
+                    
                 } // end if
                 if (charRecebida[marcador + 1] == '3') {
                     Serial.println("Arial_Black_16: ");
@@ -342,6 +379,22 @@ void Comunica_serial1T(int marca) {
                     dmd.clearScreen();
                     delay(1);
                     dmd.drawString(2, 2, strTemp);
+                    
+                    Serial.print ("String impressa: ");
+                    Serial.print (strTemp            );
+                    Serial.print ("\n               ");
+                    Serial.flush (); 
+                    delay(10);
+                    digitalWrite(pinled, HIGH);
+                    digitalWrite(MASTER, HIGH);
+                    delay(10);
+                    Serial1.print(str);// DEVOLVENDO A STRING PARA REDE
+                    Serial1.flush (); 
+                    delay(10);
+                    digitalWrite(pinled, LOW);
+                    digitalWrite(MASTER, LOW);
+                    cont=0;
+                    
                 } // end if
             } // end marcadorS com marca 
             delay(10);
