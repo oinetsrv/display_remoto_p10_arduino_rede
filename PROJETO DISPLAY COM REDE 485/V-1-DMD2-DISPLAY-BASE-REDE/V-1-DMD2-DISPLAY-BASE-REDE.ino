@@ -151,7 +151,8 @@ void setup() {
     digitalWrite(pinled, LOW);
     digitalWrite(MASTER, LOW);
     Serial.println("\n\nProjeto controle rede de displays fabrica de fertilizantes.");
-    Serial.println("Reset de 8 segundos                            ");
+    //Serial.println("Reset de 8 segundos  Comunica_serialR();                           ");
+    Serial.println("Reset de 8 segundos  Comunica_serial1T(marca);                           ");
     Serial.println("Nome arquivo:V-1-DMD2-DISPLAY-BASE.ino...");
     Serial.println("\n\n");
     delay(1000);
@@ -161,8 +162,22 @@ void setup() {
 // --- Loop Infinito                --- //
 void loop() {
     wdt_reset();
-    marca = 2; // 1 Marcador S || 2 Marcador E || 3 Marcador T 
-    Comunica_serial1T(marca);
+    marca = 3; // 1 Marcador S || 2 Marcador E || 3 Marcador T 
+    if (Serial1.available()) {
+      Comunica_serial1T(marca);  
+      delay(50);
+    }else{
+        if (str.length()>1){
+            Serial.println("EXCLUIU DADO RECEBIDO!");
+            str.remove(0, str.length());
+            for (int i = 0; i <= tam_msg; i++) {
+                 charRecebida[i] = ' ';
+             }// END FOR
+        }
+        delay(50);
+
+    }
+    //Comunica_serial1T(marca);
     //Comunica_serialR();
 } // end loop
 // =================================================================================
@@ -195,7 +210,7 @@ void Comunica_serialR(){
         if (str.endsWith("*")) {
             Serial.print("Serial enviada!!!:   ");
             digitalWrite( MASTER, HIGH);
-            delay(100);
+            delay(10);
              for (int i = 0; i <= cont; i++) {
                  Serial.print ( charRecebida[i]);
                  Serial.flush ();
@@ -204,7 +219,7 @@ void Comunica_serialR(){
                  charRecebida[i] = ' ';
              }// END FOR
              cont=0;
-             delay(90);
+             delay(10);
              digitalWrite(MASTER, LOW  );
              Serial.print(" DESTRUIDA!\n\n ");
              str.remove(-1, str.length());
@@ -217,10 +232,11 @@ void Comunica_serialR(){
         int tamanho_string = str.length();
         cont1++;
     } // end while
-    while (cont1>1) {
-        Serial.print("DESTRUIDA!: ");
+    while (!Serial1.available() && cont1>1) {
+        Serial.print("STRING IMPRESSA!: ");
         Serial.print(str);
         Serial.print("\n");
+        Serial.flush();
         str.remove(-1, str.length());
         delay(1); 
         cont1=0;
@@ -234,7 +250,7 @@ void Comunica_serial1T(int marca) {
         int tamanho_string = str.length();
         int marcador = -1;
         charRecebida[cont] = request;
-        Serial.print(charRecebida[cont]);
+        //Serial.print(charRecebida[cont]);
         cont++;
         // ONDE INDENTIFICO O ENDERECO(E,S,T)   ///////
         if (str.endsWith("*")) { //S0ABCDE*
@@ -242,6 +258,8 @@ void Comunica_serial1T(int marca) {
             int marcadorE = -1;
             int marcadorT = -1;
             int tamanho_corte = str.length();
+            Serial.print (str); // ENVIA NA SERIAL O QUE RECEBEU SERIAL1
+            Serial.flush ();    // ESPERA DADOS SEREM TODOS ENVIADOS
             for (int i = 0; i < tamanho_string; i++) {
                 if (charRecebida[i] == 'S' && marca == 1) {
                     if (charRecebida[i + 1] == '0' || charRecebida[i + 1] == '1' || charRecebida[i + 1] == '2' || charRecebida[i + 1] == '3') {
@@ -249,6 +267,7 @@ void Comunica_serial1T(int marca) {
                         marcadorS = 1;
                         Serial.print("Marcador posicao S: ");
                         Serial.print(marcador);
+                        Serial.flush (); 
                     } // END IF
                 } //END IF
                 if (charRecebida[i] == 'E' && marca == 2) {
@@ -257,6 +276,7 @@ void Comunica_serial1T(int marca) {
                         marcadorE = 1;
                         Serial.print("Marcador posicao E: ");
                         Serial.print(marcadorE);
+                        Serial.flush (); 
                     } // END IF
                 } //END IF
                 if (charRecebida[i] == 'T' && marca == 3) {
@@ -265,12 +285,14 @@ void Comunica_serial1T(int marca) {
                         marcadorT = 1;
                         Serial.print("Marcador posicao T: ");
                         Serial.print(marcadorT);
+                        Serial.flush (); 
                     } // END IF
                 } //END IF
                 if (charRecebida[i] == '*') {
                     Serial.print("Marcador posicao *: ");
                     tamanho_corte = i;
                     Serial.println(tamanho_corte);
+                    Serial.flush (); 
                 } //END IF
             } // end for
             // END ONDE INDENTIFICO O ENDERECO(E,S,T)   ///////
@@ -281,12 +303,14 @@ void Comunica_serial1T(int marca) {
                 Serial.print("String impressa: ");
                 Serial.print(strTemp            );
                 Serial.print("\n               ");
-                    delay(100);
+                Serial.flush (); 
+                    delay(10);
                     digitalWrite(pinled, HIGH);
                     digitalWrite(MASTER, HIGH);
-                    delay(100);
+                    delay(10);
                     Serial1.print(strTemp);
-                    delay(100);
+                    Serial1.flush (); 
+                    delay(10);
                     digitalWrite(pinled, LOW);
                     digitalWrite(MASTER, LOW);
 
@@ -332,6 +356,9 @@ void Comunica_serial1T(int marca) {
             Serial.print("\n");
         } // end if str.endsWith
     } // end while
+    //LIMPANDO NA TORRA!!!
+        digitalWrite(pinled, LOW);
+        digitalWrite(MASTER, LOW);
 } // end Comunica_serialT()
 // =================================================================================
 // =================================================================================
