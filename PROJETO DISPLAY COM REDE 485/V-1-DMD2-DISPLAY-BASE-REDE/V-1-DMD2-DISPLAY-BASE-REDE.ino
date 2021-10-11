@@ -151,11 +151,15 @@ void setup() {
     digitalWrite(pinled, LOW);
     digitalWrite(MASTER, LOW);
     Serial.println("\n\nProjeto controle rede de displays fabrica de fertilizantes.");
-    //Serial.println("Reset de 8 segundos  Comunica_serialR();                           ");
-    Serial.println("Reset de 8 segundos  Comunica_serial1T(marca);                           ");
-    Serial.println("Nome arquivo:V-1-DMD2-DISPLAY-BASE.ino...");
+    //Serial.println("Reset de 8 segundos  Comunica_serialR();                     ");
+    Serial.println("Reset de 8 segundos  Comunica_serial1T(marca);                 ");
+    Serial.println("Nome arquivo:V-1-DMD2-DISPLAY-BASE.ino...                      ");
     Serial.println("\n\n");
+    dmd.selectFont(SystemFont5x7);
+    dmd.drawString(1, 0, "...");
     delay(1000);
+    dmd.clearScreen();
+    delay(1);
 } // end setup
 // =================================================================================
 
@@ -318,8 +322,8 @@ void Comunica_serial1T(int marca) {
                     digitalWrite(pinled, HIGH);
                     digitalWrite(MASTER, HIGH);
                     delay(10);
-                    Serial1.print(str);// DEVOLVENDO A STRING PARA REDE
-                    Serial1.flush (); 
+                    //Serial1.print(str);// DEVOLVENDO A STRING PARA REDE
+                    //Serial1.flush (); 
                     delay(10);
                     digitalWrite(pinled, LOW);
                     digitalWrite(MASTER, LOW);
@@ -341,8 +345,8 @@ void Comunica_serial1T(int marca) {
                     digitalWrite(pinled, HIGH);
                     digitalWrite(MASTER, HIGH);
                     delay(10);
-                    Serial1.print(str);// DEVOLVENDO A STRING PARA REDE
-                    Serial1.flush (); 
+                    //Serial1.print(str);// DEVOLVENDO A STRING PARA REDE
+                    //Serial1.flush (); 
                     delay(10);
                     digitalWrite(pinled, LOW);
                     digitalWrite(MASTER, LOW);
@@ -365,8 +369,8 @@ void Comunica_serial1T(int marca) {
                     digitalWrite(pinled, HIGH);
                     digitalWrite(MASTER, HIGH);
                     delay(10);
-                    Serial1.print(str);// DEVOLVENDO A STRING PARA REDE
-                    Serial1.flush (); 
+                    //Serial1.print(str);// DEVOLVENDO A STRING PARA REDE
+                    //Serial1.flush (); 
                     delay(10);
                     digitalWrite(pinled, LOW);
                     digitalWrite(MASTER, LOW);
@@ -388,8 +392,8 @@ void Comunica_serial1T(int marca) {
                     digitalWrite(pinled, HIGH);
                     digitalWrite(MASTER, HIGH);
                     delay(10);
-                    Serial1.print(str);// DEVOLVENDO A STRING PARA REDE
-                    Serial1.flush (); 
+                    //Serial1.print(str);// DEVOLVENDO A STRING PARA REDE
+                    //Serial1.flush (); 
                     delay(10);
                     digitalWrite(pinled, LOW);
                     digitalWrite(MASTER, LOW);
